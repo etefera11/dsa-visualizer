@@ -22,7 +22,27 @@ class SortResponse(BaseModel):
     total_comparisons: int
     total_swaps: int
 
+# --- Linked List ---
 
+class LLNode(BaseModel):
+    value: int
+    index: int                  # position in the list
+
+class LinkedListStep(BaseModel):
+    nodes: list[LLNode]
+    active_index: int | None    # node currently being visited
+    comparing_index: int | None # node being compared (for search)
+    new_index: int | None       # newly inserted node
+    description: str
+
+class LinkedListRequest(BaseModel):
+    values: list[int]           # initial list
+    target: int | None = None   # value to insert/delete/search
+
+class LinkedListResponse(BaseModel):
+    operation: str
+    steps: list[LinkedListStep]
+    
 # --- Quiz ---
 
 class QuizQuestion(BaseModel):

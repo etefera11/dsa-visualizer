@@ -1,10 +1,11 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
-from models import SortRequest, SortResponse, QuizRequest, QuizResponse, QuizQuestion
+from models import SortRequest, SortResponse, QuizRequest, QuizResponse, QuizQuestion, LinkedListRequest, LinkedListResponse
 from algorithms.sorting.bubble import bubble_sort
 from algorithms.sorting.merge import merge_sort
 from algorithms.sorting.quick import quick_sort
+from algorithms.linked_list.operations import traverse, search, insert_tail, delete
 
 app = FastAPI(title="DSA Visualizer API", version="0.1.0")
 
@@ -35,7 +36,6 @@ SORTING_ALGORITHMS = {
     "quick": quick_sort,
 }
 
-
 @app.post("/algorithms/sort/{algorithm}", response_model=SortResponse)
 def run_sort(algorithm: str, body: SortRequest):
     if algorithm not in SORTING_ALGORITHMS:
@@ -63,6 +63,32 @@ def run_sort(algorithm: str, body: SortRequest):
         total_swaps=total_swaps,
     )
 
+# ---------------------------------------------------------------------------
+# Linked List
+# ---------------------------------------------------------------------------
+
+LINKED_LIST_OPERATIONS = {
+    "traverse": traverse,
+    "search": search,
+    "insert": insert_tail,
+    "delete": delete,
+}
+
+@app.post("/algorithms/linked-list/{operation}", response_model=LinkedListResponse)
+def run_linked_list(operation: str, body: LinkedListRequest):
+    if operation not in LINKED_LIST_OPERATIONS:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Unknown operation '{operation}'. Available: {list(LINKED_LIST_OPERATIONS.keys())}",
+        )
+    if len(body.values) < 1:
+        raise HTTPException(status_code=400, detail="List must have at least 1 node")
+
+    fn = LINKED_LIST_OPERATIONS[operation]
+    kwargs = {"target": body.target} if body.target is not None else {}
+    steps = list(fn(body.values, **kwargs))
+
+    return LinkedListResponse(operation=operation, steps=steps)
 
 # ---------------------------------------------------------------------------
 # Quiz (stub — full implementation next)

@@ -130,3 +130,21 @@ body {
   padding: 10px 0;
 }
 .stats strong { color: #c4bfef; }
+
+.mode-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1.5rem;
+}
+.tab {
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: 1px solid #2e2c3e;
+  background: #1a1826;
+  color: #888;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.15s;
+}
+.tab:hover { background: #252336; color: #e8e6f0; }
+.tab.active { background: #534AB7; border-color: #534AB7; color: #fff; }
