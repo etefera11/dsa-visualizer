@@ -1,6 +1,6 @@
 # DSA Visualizer
 
-Interactive DSA learning tool — watch algorithms run step by step, then get quizzed on what you just saw.
+Interactive DSA learning tool - watch algorithms run step by step, then get quizzed on what you just saw.
 
 **Live demo:** https://dsa-visualizer.ezana.dev
 
