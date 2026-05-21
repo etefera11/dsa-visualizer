@@ -12,7 +12,10 @@ app = FastAPI(title="DSA Visualizer API", version="0.1.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # Vite dev server; update for prod
+    allow_origins=[
+        "http://localhost:5173",
+        "https://dsa-visualizer-frontend.azurestaticapps.net",  # update with your actual static web app URL
+    ],
     allow_methods=["*"],
     allow_headers=["*"],
 )
