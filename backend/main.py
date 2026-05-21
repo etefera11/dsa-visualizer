@@ -14,8 +14,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
-        "https://ambitious-sea-0033eea0f.7.azurestaticapps.net",  # update with your actual static web app URL
-    ],
+        "https://ambitious-sea-0033eea0f.7.azurestaticapps.net",
+        "https://dsa-visualizer.ezana.dev"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
