@@ -25,6 +25,7 @@ DSA Visualizer lets you select an algorithm or data structure operation, input y
 <img width="789" height="338" alt="image" src="https://github.com/user-attachments/assets/9315cbbb-353f-4791-bf56-ef7c016a6534" />
 
 React + D3.js (Azure Static Web Apps) → FastAPI (Azure Container Apps) → Azure OpenAI GPT-4o (quiz generation)
+
 React frontend → FastAPI backend → algorithm executes as a Python generator → step snapshots returned → D3.js animates each snapshot → Azure OpenAI generates quiz questions from the execution trace
 
 ## Tech Stack
