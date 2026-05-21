@@ -56,3 +56,21 @@ export async function runLinkedList(
   );
   return data;
 }
+
+// --- Quiz ---
+
+export interface QuizQuestion {
+  question: string;
+  options: string[];
+  correct_index: number;
+  explanation: string;
+}
+
+export interface QuizResponse {
+  questions: QuizQuestion[];
+}
+
+export async function fetchQuiz(algorithm: string, array: number[]): Promise<QuizResponse> {
+  const { data } = await client.post<QuizResponse>("/quiz", { algorithm, array });
+  return data;
+}

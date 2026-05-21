@@ -54,7 +54,8 @@ class QuizQuestion(BaseModel):
 
 class QuizRequest(BaseModel):
     algorithm: str
-    topic: str  # "complexity", "trace", "concept"
+    array: list[int]
+    topic: str = "mixed"
 
 
 class QuizResponse(BaseModel):

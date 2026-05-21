@@ -6,6 +6,7 @@ from algorithms.sorting.bubble import bubble_sort
 from algorithms.sorting.merge import merge_sort
 from algorithms.sorting.quick import quick_sort
 from algorithms.linked_list.operations import traverse, search, insert_tail, delete
+from quiz import generate_quiz
 
 app = FastAPI(title="DSA Visualizer API", version="0.1.0")
 
@@ -96,18 +97,17 @@ def run_linked_list(operation: str, body: LinkedListRequest):
 
 @app.post("/quiz", response_model=QuizResponse)
 def get_quiz(body: QuizRequest):
-    # Placeholder — returns a hardcoded bubble sort complexity question
-    # so the frontend integration can be wired up before quiz logic is complete
-    return QuizResponse(
-        questions=[
-            QuizQuestion(
-                question="What is the worst-case time complexity of bubble sort?",
-                options=["O(n)", "O(n log n)", "O(n²)", "O(log n)"],
-                correct_index=2,
-                explanation=(
-                    "In the worst case (reverse-sorted array), bubble sort performs "
-                    "n*(n-1)/2 comparisons — one for every pair — giving O(n²)."
-                ),
-            )
-        ]
-    )
+    if body.algorithm.startswith("linked-list"):
+        operation = body.algorithm.replace("linked-list-", "")
+        if operation not in LINKED_LIST_OPERATIONS:
+            raise HTTPException(status_code=404, detail="Unknown operation")
+        fn = LINKED_LIST_OPERATIONS[operation]
+        steps = [s.model_dump() for s in fn(body.array, target=None)]
+    else:
+        if body.algorithm not in SORTING_ALGORITHMS:
+            raise HTTPException(status_code=404, detail="Unknown algorithm")
+        fn = SORTING_ALGORITHMS[body.algorithm]
+        steps = [s.model_dump() for s in fn(body.array)]
+
+    questions = generate_quiz(body.algorithm, steps, body.array)
+    return QuizResponse(questions=questions)
